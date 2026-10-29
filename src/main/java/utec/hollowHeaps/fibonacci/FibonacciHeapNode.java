@@ -1,23 +1,19 @@
-package utec.hollowHeaps.fibonacciHeap;
+package utec.hollowHeaps.fibonacci;
 
 public class FibonacciHeapNode {
-    public int id; // for min value tied nodes, we need to tie-break them and choose a winner
-    String value;
-    Integer key;
-    int degree;
+    public int id;
+    public long key;
+    public int degree;
 
-    FibonacciHeapNode next;
-    FibonacciHeapNode prev;
+    public FibonacciHeapNode next;
+    public FibonacciHeapNode prev;
+    public FibonacciHeapNode parent;
+    public FibonacciHeapNode child;
 
-    FibonacciHeapNode parent;
-    FibonacciHeapNode child;
+    public boolean isMarked;
 
-    boolean isMarked;
-
-    // Constructor
-    public FibonacciHeapNode(int id,Integer key, String value) {
+    public FibonacciHeapNode(int id, long key) {
         this.id = id;
-        this.value = value;
         this.key = key;
         this.degree = 0;
         this.isMarked = false;
@@ -26,8 +22,6 @@ public class FibonacciHeapNode {
         this.parent = null;
         this.child = null;
     }
-
-    // Convierte a 'node' en hijo de 'this'
 
     public void linkNode(FibonacciHeapNode node) {
         if (node == null) return;
@@ -49,5 +43,4 @@ public class FibonacciHeapNode {
 
         this.degree++;
     }
-
 }

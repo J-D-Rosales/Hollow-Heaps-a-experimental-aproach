@@ -1,40 +1,77 @@
-package utec.hollowHeaps.fibonacciHeap;
+package utec.hollowHeaps.fibonacci;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FibonacciHeap {
+import utec.hollowHeaps.api.VertexHeap;
+
+public class FibonacciHeap implements VertexHeap {
+
+    // Centinela: nodeOf[id] == EXTRACTED significa que el id ya fue extraído del heap
+    private static final FibonacciHeapNode EXTRACTED =
+            new FibonacciHeapNode(Integer.MIN_VALUE, Long.MAX_VALUE);
+
     FibonacciHeapNode head;
     FibonacciHeapNode min;
     int size;
 
-    public FibonacciHeap() { // constuctor
+    private final int capacity;
+    private final FibonacciHeapNode[] nodeOf; // id -> nodo activo (null=nunca insertado, EXTRACTED=extraído)
+
+    private final List<FibonacciHeapNode> rootList = new ArrayList<>();
+    private final FibonacciHeapNode[] slots = new FibonacciHeapNode[64];
+
+    public FibonacciHeap(int capacity) {
+        this.capacity = capacity;
+        this.nodeOf = new FibonacciHeapNode[capacity];
         this.head = null;
         this.min = null;
         this.size = 0;
     }
 
-    // criterio IsBetter: 
-        // principle: Alignig to theory: node a is better than b as long as a.key < b.key, if a.key == b.key, then we use a.id < b.id to break the tie
-        // remember: we are in a minheap. We want to have in the root the "minimum" node
-    private boolean isBetterThan( FibonacciHeapNode a, FibonacciHeapNode b){
-        
-        if (a.key != b.key){ // what if use < directly to compare,  instead of using != d
-            return a.key < b.key;
-        }
-         
-        return a.id < b.id; // tie-breaker
+    @Override
+    public int findMin() {
+        return min == null ? -1 : min.id;
     }
 
-    public FibonacciHeapNode enqueue(int id, Integer key,String value) {
-        FibonacciHeapNode newNode = new FibonacciHeapNode(id, key, value);
+    @Override
+    public int size() {
+        return size;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return head == null;
+    }
+
+    public FibonacciHeapNode getHead() {
+        return head;
+    }
+
+    // criterio IsBetter:
+    // a es mejor que b si a.key < b.key; si a.key == b.key, desempata a.id < b.id
+    private boolean isBetterThan(FibonacciHeapNode a, FibonacciHeapNode b) {
+        if (a.key != b.key) {
+            return a.key < b.key;
+        }
+        return a.id < b.id; // desempate por id de vértice
+    }
+
+    @Override
+    public void insert(int id, long key) {
+        if (id < 0 || id >= capacity) throw new IndexOutOfBoundsException("id=" + id);
+        if (nodeOf[id] != null) throw new IllegalStateException("id=" + id + " ya fue insertado o extraído");
+
+        FibonacciHeapNode newNode = new FibonacciHeapNode(id, key);
+        nodeOf[id] = newNode;
+
         if (head == null) {
             this.head = newNode;
             this.min = newNode;
             this.size = 1;
-            return newNode;
+            return;
         }
         FibonacciHeapNode tail = this.head.prev;
 
@@ -45,57 +82,54 @@ public class FibonacciHeap {
         tail.next = newNode;
         this.size++;
 
-        
         if (isBetterThan(newNode, this.min)) {
             this.min = newNode;
         }
-
-        return newNode;
     }
 
-    public FibonacciHeapNode extractMin() {
-        if (this.head == null) {
-            return null;
-        }
+    @Override
+    public int deleteMin() {
+        if (this.head == null) return -1;
 
-        FibonacciHeapNode min = this.min;
-        subirHijosARoot(min);
+        FibonacciHeapNode minNodo = this.min;
+        int minimoId = minNodo.id;
+        nodeOf[minimoId] = EXTRACTED;
 
-        if (min.next == min) {
+        subirHijosARoot(minNodo);
+
+        if (minNodo.next == minNodo) {
             this.head = null;
             this.min = null;
         } else {
-            min.prev.next = min.next;
-            min.next.prev = min.prev;
-            if (this.head == min) {
-                this.head = min.next;
+            minNodo.prev.next = minNodo.next;
+            minNodo.next.prev = minNodo.prev;
+            if (this.head == minNodo) {
+                this.head = minNodo.next;
             }
 
-            // 3. Consolidar el bosque para unir árboles de igual grado y actualizar this.min
+            // Consolidar el bosque para unir árboles de igual grado y actualizar this.min
             coalesce();
         }
 
-        min.next = null;
-        min.prev = null;
-        min.parent = null;
-        min.child = null;
-        min.isMarked = false;
+        minNodo.next = null;
+        minNodo.prev = null;
+        minNodo.parent = null;
+        minNodo.child = null;
+        minNodo.isMarked = false;
 
         this.size--;
-        return min;
+        return minimoId;
     }
 
-    private void coalesce() { // proposito de coalesce es : 
+    private void coalesce() {
         if (head == null) return;
 
-        List<FibonacciHeapNode> rootList = new ArrayList<>();
+        rootList.clear();
         FibonacciHeapNode curr = this.head;
         do {
             rootList.add(curr);
             curr = curr.next;
         } while (curr != this.head);
-
-        FibonacciHeapNode[] slots = new FibonacciHeapNode[64];
 
         for (FibonacciHeapNode x : rootList) {
             int d = x.degree;
@@ -104,7 +138,7 @@ public class FibonacciHeap {
                 FibonacciHeapNode y = slots[d];
                 slots[d] = null;
 
-                // El nodo "peor" (clave mayor o id mayor) se vuelve hijo del nodo "mejor"
+                // El nodo "peor" se vuelve hijo del nodo "mejor"
                 if (isBetterThan(y, x)) {
                     FibonacciHeapNode temp = x;
                     x = y;
@@ -116,6 +150,7 @@ public class FibonacciHeap {
             }
             slots[d] = x;
         }
+        rootList.clear(); // no retener referencias a nodos entre llamadas
 
         this.head = null;
         this.min = null;
@@ -123,6 +158,7 @@ public class FibonacciHeap {
         for (int i = 0; i < 64; i++) {
             if (slots[i] != null) {
                 FibonacciHeapNode node = slots[i];
+                slots[i] = null;
                 node.parent = null;
 
                 if (this.head == null) {
@@ -162,7 +198,7 @@ public class FibonacciHeap {
         node.degree = 0;
     }
 
-    private void subirAroot(FibonacciHeapNode node){
+    private void subirAroot(FibonacciHeapNode node) {
         if (this.head == null) {
             this.head = node;
             node.next = node;
@@ -178,29 +214,26 @@ public class FibonacciHeap {
         node.isMarked = false;
     }
 
-    public void decreaseKey(FibonacciHeapNode nodo, Integer nuevoKey){
-        // verificaciones
-        if (nodo == null || nuevoKey == null){
-            return;
-        }
-        if (nuevoKey >= nodo.key){
-            return;
-        }
+    @Override
+    public void decreaseKey(int id, long newKey) {
+        if (id < 0 || id >= capacity) throw new IndexOutOfBoundsException("id=" + id);
+        FibonacciHeapNode nodo = nodeOf[id];
+        if (nodo == null || nodo == EXTRACTED) throw new IllegalStateException("id=" + id + " no está en el heap");
+        if (newKey >= nodo.key) return;
 
         // cambiamos la llave
-        nodo.key = nuevoKey;
+        nodo.key = newKey;
 
-        // La llave es menor que la de su padre, debemos actualizarla
+        // La llave es menor que la de su padre, debemos cortar
         FibonacciHeapNode parent = nodo.parent;
 
         if (parent != null && isBetterThan(nodo, parent)) {
             cut(nodo, parent);
             cascadingCut(parent);
         }
-        if (this.min == null || nodo.key < this.min.key) {
+        if (isBetterThan(nodo, this.min)) {
             this.min = nodo;
         }
-
     }
 
     private void cut(FibonacciHeapNode nodo, FibonacciHeapNode parent) {
@@ -230,6 +263,19 @@ public class FibonacciHeap {
         }
     }
 
+    @Override
+    public long keyOf(int id) {
+        if (id < 0 || id >= capacity) throw new IndexOutOfBoundsException("id=" + id);
+        FibonacciHeapNode n = nodeOf[id];
+        if (n == null || n == EXTRACTED) throw new IllegalStateException("id=" + id + " no está en el heap");
+        return n.key;
+    }
+
+    @Override
+    public boolean contains(int id) {
+        if (id < 0 || id >= capacity) return false;
+        return nodeOf[id] != null && nodeOf[id] != EXTRACTED;
+    }
 
     // Métodos para imprimir el Fibonacci Heap con Colores ANSI
     public void printHeapBySlots() {
@@ -238,16 +284,14 @@ public class FibonacciHeap {
             return;
         }
 
-        // Definición de colores ANSI básicos
-        String RESET = "\u001B[0m";
-        String AMARILLO = "\u001B[33m";
-        String GRIS = "\u001B[90m";
+        String RESET = "[0m";
+        String AMARILLO = "[33m";
+        String GRIS = "[90m";
 
         // Mapa para agrupar las raíces por su Grado (Slot)
         Map<Integer, List<FibonacciHeapNode>> slots = new HashMap<>();
         int maxGrade = 0;
 
-        // 1. Recorrer la lista circular de raíces principales
         FibonacciHeapNode curr = this.head;
         do {
             int g = curr.degree;
@@ -263,7 +307,6 @@ public class FibonacciHeap {
             curr = curr.next;
         } while (curr != this.head);
 
-        // 2. Imprimir slot por slot desde 0 hasta el grado máximo encontrado
         System.out.println(AMARILLO + "===== ESTADO DEL FIBONACCI HEAP (POR SLOTS) =====" + RESET);
         for (int grade = 0; grade <= maxGrade; grade++) {
             System.out.println(GRIS + "Slot " + grade + ":" + RESET);
@@ -274,11 +317,10 @@ public class FibonacciHeap {
             } else {
                 int count = 1;
                 for (FibonacciHeapNode node : nodesInSlot) {
-                    // Configurar colores específicos para este nodo
-                    String NARANJA = "\u001B[33m"; // Naranja/Marrón para marcados
-                    String CIAN_B = "\u001B[96m";   // Cian brillante para el mínimo
-                    String VERDE = "\u001B[32m";    // Verde para hojas
-                    String AZUL = "\u001B[34m";     // Azul para nodos raíz/internos estándar
+                    String NARANJA = "[33m";
+                    String CIAN_B = "[96m";
+                    String VERDE = "[32m";
+                    String AZUL = "[34m";
 
                     String colorNodo = (node.child == null) ? VERDE : AZUL;
                     String markedStr = "";
@@ -293,12 +335,10 @@ public class FibonacciHeap {
                         isMinStr = CIAN_B + " <--- (MIN)" + RESET;
                     }
 
-                    // Imprimir el nodo principal del slot
                     System.out.println("   " + count + "º nodo -> " + colorNodo + "Key: " + node.key
-                            + " | Value: \"" + node.value + "\"" + RESET
+                            + " | id: " + node.id + RESET
                             + markedStr + isMinStr);
 
-                    // Mostrar subárbol si el nodo tiene hijos
                     if (node.child != null) {
                         printSubtree(node.child, "      ");
                     }
@@ -312,13 +352,12 @@ public class FibonacciHeap {
     private void printSubtree(FibonacciHeapNode childNode, String indent) {
         if (childNode == null) return;
 
-        String RESET = "\u001B[0m";
-        String GRIS = "\u001B[90m";
-        String NARANJA = "\u001B[33m";
-        String VERDE = "\u001B[32m";
-        String AZUL = "\u001B[34m";
+        String RESET = "[0m";
+        String GRIS = "[90m";
+        String NARANJA = "[33m";
+        String VERDE = "[32m";
+        String AZUL = "[34m";
 
-        // Recorrido de lista CIRCULAR de hijos (evita bucles infinitos)
         FibonacciHeapNode currChild = childNode;
         do {
             String colorNodo = (currChild.child == null) ? VERDE : AZUL;
@@ -329,19 +368,14 @@ public class FibonacciHeap {
                 markedStr = " " + NARANJA + "[M]" + RESET;
             }
 
-            // Prefijo estructurado en Gris para que se vea limpio
             System.out.print(GRIS + indent + "└── [Hijo Grado " + currChild.degree + "] " + RESET);
+            System.out.println(colorNodo + "Key: " + currChild.key + " | id: " + currChild.id + RESET + markedStr);
 
-            // Contenido del nodo con su respectivo color
-            System.out.println(colorNodo + "Key: " + currChild.key + " | Value: \"" + currChild.value + "\"" + RESET + markedStr);
-
-            // Llamada recursiva si este hijo también tiene sus propios hijos
             if (currChild.child != null) {
                 printSubtree(currChild.child, indent + "    ");
             }
 
-            currChild = currChild.next; // Avanzamos por el anillo de hermanos
-        } while (currChild != childNode); // Terminamos al dar la vuelta completa
+            currChild = currChild.next;
+        } while (currChild != childNode);
     }
-
 }
