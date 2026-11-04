@@ -3,6 +3,8 @@ package utec.hollowHeaps.hollow;
 import java.util.ArrayList;
 import java.util.List;
 
+import utec.hollowHeaps.api.HeapStats;
+import utec.hollowHeaps.api.Instrumentation;
 import utec.hollowHeaps.api.VertexHeap;
 
 public class HollowHeap implements VertexHeap {
@@ -10,15 +12,27 @@ public class HollowHeap implements VertexHeap {
     // Centinela: nodeOf[id] == EXTRACTED significa que el id ya fue extraído del heap
     private static final HollowNode EXTRACTED = new HollowNode(Long.MAX_VALUE, Integer.MIN_VALUE);
 
-    HollowNode root;
-    int size;
+    private HollowNode root;
+    private int size;
 
     private final int capacity;
     private final HollowNode[] nodeOf; // id -> nodo activo actual (null=nunca insertado, EXTRACTED=extraído)
 
+    private static final String RESET    = "\u001B[0m";
+    private static final String AMARILLO = "\u001B[33m";
+    private static final String ROJO     = "\u001B[38;5;208m";
+    private static final String VERDE    = "\u001B[32m";
+    private static final String AZUL     = "\u001B[34m";
+    private static final String GRIS     = "\u001B[90m";
+
     // D4: buffers de deleteMin reutilizados entre llamadas (misma política que FibonacciHeap)
     private final List<HollowNode> L = new ArrayList<>();
     private final HollowNode[] A = new HollowNode[64]; // rank <= log_phi(n) ~ 45 para n <= 2^31
+
+    private final HeapStats stats = new HeapStats();
+    private int instrHollowCount; // solo actualizado dentro de bloques Instrumentation.ENABLED
+
+    public HeapStats stats() { return stats; }
 
     public HollowHeap(int capacity) {
         this.capacity = capacity;
@@ -43,6 +57,7 @@ public class HollowHeap implements VertexHeap {
         }
         v.next = u.child;
         u.child = v;
+        if (Instrumentation.ENABLED) stats.links++;
 
         return u;
     }
@@ -76,6 +91,12 @@ public class HollowHeap implements VertexHeap {
             this.root = link(this.root, nuevoNodo);
         }
         this.size++;
+        if (Instrumentation.ENABLED) {
+            stats.inserts++;
+            if (size > stats.maxSize) stats.maxSize = size;
+            long total = size + instrHollowCount;
+            if (total > stats.maxNodes) stats.maxNodes = total;
+        }
     }
 
     @Override
@@ -83,7 +104,11 @@ public class HollowHeap implements VertexHeap {
         if (id < 0 || id >= capacity) throw new IndexOutOfBoundsException("id=" + id);
         HollowNode u = nodeOf[id];
         if (u == null || u == EXTRACTED) throw new IllegalStateException("id=" + id + " no está en el heap");
-        if (newKey >= u.key) return;
+        if (newKey >= u.key) {
+            if (Instrumentation.ENABLED) stats.decreaseKeyNoOps++;
+            return;
+        }
+        if (Instrumentation.ENABLED) stats.decreaseKeys++;
 
         // Caso de si u es root
         if (u == this.root) {
@@ -97,6 +122,12 @@ public class HollowHeap implements VertexHeap {
         nodeOf[id] = v;
 
         u.id = -1; // u pasa a ser hollow
+        if (Instrumentation.ENABLED) {
+            stats.hollowCreated++;
+            instrHollowCount++;
+            long total = size + instrHollowCount;
+            if (total > stats.maxNodes) stats.maxNodes = total;
+        }
         v.child = u; // su unico hijo
         u.ep = v;    // si no es el root asignamos un segundo padre
 
@@ -110,11 +141,14 @@ public class HollowHeap implements VertexHeap {
         // Vaciamos la raíz
         int minimoId = this.root.id;
         this.root.id = -1; // root pasa a hollow
+        if (Instrumentation.ENABLED) { stats.hollowCreated++; instrHollowCount++; }
         nodeOf[minimoId] = EXTRACTED;
         this.size--;
+        if (Instrumentation.ENABLED) stats.deleteMins++;
 
         // Reestructuracion del heap y eliminación de los Hollow
         L.add(this.root);
+        if (Instrumentation.ENABLED) { stats.hollowFreed++; instrHollowCount--; }
         int maxRank = 0;
 
         while (!L.isEmpty()) {
@@ -135,6 +169,7 @@ public class HollowHeap implements VertexHeap {
                         c.ep = null;
                     } else {
                         L.add(c);
+                        if (Instrumentation.ENABLED) { stats.hollowFreed++; instrHollowCount--; }
                     }
                 } else { // C está activo: colocarlo en A y hacer coalesce
                     c.next = null;
@@ -183,9 +218,6 @@ public class HollowHeap implements VertexHeap {
     }
 
     public void printHeap() {
-        String RESET = "[0m";
-        String AMARILLO = "[33m";
-
         System.out.println(AMARILLO + "================ ESTADO DEL HOLLOW HEAP ================" + RESET);
         if (this.root == null) {
             System.out.println("(Heap vacío)");
@@ -197,12 +229,6 @@ public class HollowHeap implements VertexHeap {
 
     private void printNode(HollowNode node, String indent, boolean isLast) {
         if (node == null) return;
-
-        String RESET = "[0m";
-        String ROJO = "[38;5;208m";
-        String VERDE = "[32m";
-        String AZUL = "[34m";
-        String GRIS = "[90m";
 
         System.out.print(GRIS + indent + (isLast ? "└── " : "├── ") + RESET);
         if (isLast) {

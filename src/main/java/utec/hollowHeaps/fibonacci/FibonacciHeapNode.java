@@ -1,16 +1,16 @@
 package utec.hollowHeaps.fibonacci;
 
 public class FibonacciHeapNode {
-    public int id;
-    public long key;
-    public int degree;
+    int id;
+    long key;
+    int degree;
 
-    public FibonacciHeapNode next;
-    public FibonacciHeapNode prev;
-    public FibonacciHeapNode parent;
-    public FibonacciHeapNode child;
+    FibonacciHeapNode next;
+    FibonacciHeapNode prev;
+    FibonacciHeapNode parent;
+    FibonacciHeapNode child;
 
-    public boolean isMarked;
+    boolean isMarked;
 
     public FibonacciHeapNode(int id, long key) {
         this.id = id;
@@ -23,7 +23,7 @@ public class FibonacciHeapNode {
         this.child = null;
     }
 
-    public void linkNode(FibonacciHeapNode node) {
+    void linkNode(FibonacciHeapNode node) {
         if (node == null) return;
         node.parent = this;
         node.isMarked = false;

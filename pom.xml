@@ -28,6 +28,29 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.5.2</version>
+                <executions>
+                    <!-- Ejecución normal: excluye InstrumentationTest (sin -Dheap.instrument) -->
+                    <execution>
+                        <id>default-test</id>
+                        <goals><goal>test</goal></goals>
+                        <configuration>
+                            <excludes>
+                                <exclude>**/InstrumentationTest.java</exclude>
+                            </excludes>
+                        </configuration>
+                    </execution>
+                    <!-- Ejecución instrumentada: solo InstrumentationTest con la bandera activa -->
+                    <execution>
+                        <id>instrumentation-test</id>
+                        <goals><goal>test</goal></goals>
+                        <configuration>
+                            <includes>
+                                <include>**/InstrumentationTest.java</include>
+                            </includes>
+                            <argLine>-Dheap.instrument=true</argLine>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

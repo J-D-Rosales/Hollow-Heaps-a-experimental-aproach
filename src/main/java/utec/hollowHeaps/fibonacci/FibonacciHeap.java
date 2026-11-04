@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import utec.hollowHeaps.api.HeapStats;
+import utec.hollowHeaps.api.Instrumentation;
 import utec.hollowHeaps.api.VertexHeap;
 
 public class FibonacciHeap implements VertexHeap {
@@ -13,15 +15,27 @@ public class FibonacciHeap implements VertexHeap {
     private static final FibonacciHeapNode EXTRACTED =
             new FibonacciHeapNode(Integer.MIN_VALUE, Long.MAX_VALUE);
 
-    FibonacciHeapNode head;
-    FibonacciHeapNode min;
-    int size;
+    private FibonacciHeapNode head;
+    private FibonacciHeapNode min;
+    private int size;
 
     private final int capacity;
     private final FibonacciHeapNode[] nodeOf; // id -> nodo activo (null=nunca insertado, EXTRACTED=extraído)
 
+    private static final String RESET    = "\u001B[0m";
+    private static final String AMARILLO = "\u001B[33m";
+    private static final String GRIS     = "\u001B[90m";
+    private static final String NARANJA  = "\u001B[33m";
+    private static final String CIAN_B   = "\u001B[96m";
+    private static final String VERDE    = "\u001B[32m";
+    private static final String AZUL     = "\u001B[34m";
+
     private final List<FibonacciHeapNode> rootList = new ArrayList<>();
     private final FibonacciHeapNode[] slots = new FibonacciHeapNode[64];
+
+    private final HeapStats stats = new HeapStats();
+
+    public HeapStats stats() { return stats; }
 
     public FibonacciHeap(int capacity) {
         this.capacity = capacity;
@@ -46,10 +60,6 @@ public class FibonacciHeap implements VertexHeap {
         return head == null;
     }
 
-    public FibonacciHeapNode getHead() {
-        return head;
-    }
-
     // criterio IsBetter:
     // a es mejor que b si a.key < b.key; si a.key == b.key, desempata a.id < b.id
     private boolean isBetterThan(FibonacciHeapNode a, FibonacciHeapNode b) {
@@ -71,6 +81,10 @@ public class FibonacciHeap implements VertexHeap {
             this.head = newNode;
             this.min = newNode;
             this.size = 1;
+            if (Instrumentation.ENABLED) {
+                stats.inserts++;
+                if (size > stats.maxSize) stats.maxSize = size;
+            }
             return;
         }
         FibonacciHeapNode tail = this.head.prev;
@@ -82,6 +96,10 @@ public class FibonacciHeap implements VertexHeap {
         tail.next = newNode;
         this.size++;
 
+        if (Instrumentation.ENABLED) {
+            stats.inserts++;
+            if (size > stats.maxSize) stats.maxSize = size;
+        }
         if (isBetterThan(newNode, this.min)) {
             this.min = newNode;
         }
@@ -118,6 +136,7 @@ public class FibonacciHeap implements VertexHeap {
         minNodo.isMarked = false;
 
         this.size--;
+        if (Instrumentation.ENABLED) stats.deleteMins++;
         return minimoId;
     }
 
@@ -146,6 +165,7 @@ public class FibonacciHeap implements VertexHeap {
                 }
 
                 x.linkNode(y);
+                if (Instrumentation.ENABLED) stats.links++;
                 d = x.degree;
             }
             slots[d] = x;
@@ -181,7 +201,7 @@ public class FibonacciHeap implements VertexHeap {
         }
     }
 
-    public void subirHijosARoot(FibonacciHeapNode node) {
+    private void subirHijosARoot(FibonacciHeapNode node) {
         if (node == null || node.child == null) {
             return;
         }
@@ -219,7 +239,11 @@ public class FibonacciHeap implements VertexHeap {
         if (id < 0 || id >= capacity) throw new IndexOutOfBoundsException("id=" + id);
         FibonacciHeapNode nodo = nodeOf[id];
         if (nodo == null || nodo == EXTRACTED) throw new IllegalStateException("id=" + id + " no está en el heap");
-        if (newKey >= nodo.key) return;
+        if (newKey >= nodo.key) {
+            if (Instrumentation.ENABLED) stats.decreaseKeyNoOps++;
+            return;
+        }
+        if (Instrumentation.ENABLED) stats.decreaseKeys++;
 
         // cambiamos la llave
         nodo.key = newKey;
@@ -237,6 +261,7 @@ public class FibonacciHeap implements VertexHeap {
     }
 
     private void cut(FibonacciHeapNode nodo, FibonacciHeapNode parent) {
+        if (Instrumentation.ENABLED) stats.cuts++;
         if (nodo.next != nodo) {
             nodo.next.prev = nodo.prev;
             nodo.prev.next = nodo.next;
@@ -257,6 +282,7 @@ public class FibonacciHeap implements VertexHeap {
             if (!nodo.isMarked) {
                 nodo.isMarked = true;
             } else {
+                if (Instrumentation.ENABLED) stats.cascadingCuts++;
                 cut(nodo, parent);
                 cascadingCut(parent);
             }
@@ -283,10 +309,6 @@ public class FibonacciHeap implements VertexHeap {
             System.out.println("El Heap está totalmente vacío.");
             return;
         }
-
-        String RESET = "[0m";
-        String AMARILLO = "[33m";
-        String GRIS = "[90m";
 
         // Mapa para agrupar las raíces por su Grado (Slot)
         Map<Integer, List<FibonacciHeapNode>> slots = new HashMap<>();
@@ -317,11 +339,6 @@ public class FibonacciHeap implements VertexHeap {
             } else {
                 int count = 1;
                 for (FibonacciHeapNode node : nodesInSlot) {
-                    String NARANJA = "[33m";
-                    String CIAN_B = "[96m";
-                    String VERDE = "[32m";
-                    String AZUL = "[34m";
-
                     String colorNodo = (node.child == null) ? VERDE : AZUL;
                     String markedStr = "";
 
@@ -351,12 +368,6 @@ public class FibonacciHeap implements VertexHeap {
 
     private void printSubtree(FibonacciHeapNode childNode, String indent) {
         if (childNode == null) return;
-
-        String RESET = "[0m";
-        String GRIS = "[90m";
-        String NARANJA = "[33m";
-        String VERDE = "[32m";
-        String AZUL = "[34m";
 
         FibonacciHeapNode currChild = childNode;
         do {

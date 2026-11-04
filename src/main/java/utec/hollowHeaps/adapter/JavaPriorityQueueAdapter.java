@@ -3,6 +3,8 @@ package utec.hollowHeaps.adapter;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
+import utec.hollowHeaps.api.HeapStats;
+import utec.hollowHeaps.api.Instrumentation;
 import utec.hollowHeaps.api.VertexHeap;
 
 /**
@@ -22,6 +24,10 @@ public class JavaPriorityQueueAdapter implements VertexHeap {
     private final byte[] state;  // 0=nunca insertado, 1=en heap, 2=extraído
     private int size;            // elementos vivos, no entradas físicas
 
+    private final HeapStats stats = new HeapStats();
+
+    public HeapStats stats() { return stats; }
+
     public JavaPriorityQueueAdapter(int capacity) {
         this.capacity = capacity;
         this.dist = new long[capacity];
@@ -36,6 +42,12 @@ public class JavaPriorityQueueAdapter implements VertexHeap {
         state[id] = 1;
         pq.add(new Entry(key, id));
         size++;
+        if (Instrumentation.ENABLED) {
+            stats.inserts++;
+            if (size > stats.maxSize) stats.maxSize = size;
+            long ps = pq.size();
+            if (ps > stats.maxPhysicalSize) stats.maxPhysicalSize = ps;
+        }
     }
 
     @Override
@@ -52,6 +64,7 @@ public class JavaPriorityQueueAdapter implements VertexHeap {
         int id = top.id();
         state[id] = 2;
         size--;
+        if (Instrumentation.ENABLED) stats.deleteMins++;
         return id;
     }
 
@@ -59,9 +72,17 @@ public class JavaPriorityQueueAdapter implements VertexHeap {
     public void decreaseKey(int id, long newKey) {
         if (id < 0 || id >= capacity) throw new IndexOutOfBoundsException("id=" + id);
         if (state[id] != 1) throw new IllegalStateException("id=" + id + " no está en el heap");
-        if (newKey >= dist[id]) return;
+        if (newKey >= dist[id]) {
+            if (Instrumentation.ENABLED) stats.decreaseKeyNoOps++;
+            return;
+        }
+        if (Instrumentation.ENABLED) stats.decreaseKeys++;
         dist[id] = newKey;
         pq.add(new Entry(newKey, id)); // la entrada anterior queda obsoleta
+        if (Instrumentation.ENABLED) {
+            long ps = pq.size();
+            if (ps > stats.maxPhysicalSize) stats.maxPhysicalSize = ps;
+        }
     }
 
     @Override
@@ -96,6 +117,7 @@ public class JavaPriorityQueueAdapter implements VertexHeap {
         Entry top;
         while ((top = pq.peek()) != null && isStale(top)) {
             pq.poll();
+            if (Instrumentation.ENABLED) stats.staleDiscarded++;
         }
         return top;
     }

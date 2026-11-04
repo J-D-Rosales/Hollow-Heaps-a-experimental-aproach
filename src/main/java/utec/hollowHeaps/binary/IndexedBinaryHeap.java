@@ -2,6 +2,8 @@ package utec.hollowHeaps.binary;
 
 import java.util.Arrays;
 
+import utec.hollowHeaps.api.HeapStats;
+import utec.hollowHeaps.api.Instrumentation;
 import utec.hollowHeaps.api.VertexHeap;
 
 /**
@@ -16,6 +18,10 @@ public class IndexedBinaryHeap implements VertexHeap {
     private final int[] heap;  // id en la posición i del heap
     private final int[] pos;   // posición del id en el heap (-2=nunca, -1=extraído, >=0=en heap)
     private int size;
+
+    private final HeapStats stats = new HeapStats();
+
+    public HeapStats stats() { return stats; }
 
     public IndexedBinaryHeap(int capacity) {
         if (capacity < 1) throw new IllegalArgumentException("capacity debe ser >= 1");
@@ -35,6 +41,10 @@ public class IndexedBinaryHeap implements VertexHeap {
         keys[size] = key;
         pos[id] = size;
         size++;
+        if (Instrumentation.ENABLED) {
+            stats.inserts++;
+            if (size > stats.maxSize) stats.maxSize = size;
+        }
         siftUp(size - 1);
     }
 
@@ -49,6 +59,7 @@ public class IndexedBinaryHeap implements VertexHeap {
         int minId = heap[0];
         pos[minId] = -1; // extraído
         size--;
+        if (Instrumentation.ENABLED) stats.deleteMins++;
         if (size > 0) {
             heap[0] = heap[size];
             keys[0] = keys[size];
@@ -63,7 +74,11 @@ public class IndexedBinaryHeap implements VertexHeap {
         if (id < 0 || id >= capacity) throw new IndexOutOfBoundsException("id=" + id);
         if (pos[id] < 0) throw new IllegalStateException("id=" + id + " no está en el heap");
         int i = pos[id];
-        if (newKey >= keys[i]) return;
+        if (newKey >= keys[i]) {
+            if (Instrumentation.ENABLED) stats.decreaseKeyNoOps++;
+            return;
+        }
+        if (Instrumentation.ENABLED) stats.decreaseKeys++;
         keys[i] = newKey;
         siftUp(i);
     }
@@ -99,6 +114,7 @@ public class IndexedBinaryHeap implements VertexHeap {
             if (keys[p] <= k) {
                 break;
             }
+            if (Instrumentation.ENABLED) stats.siftSteps++;
             heap[i] = heap[p];
             keys[i] = keys[p];
             pos[heap[i]] = i;
@@ -122,6 +138,7 @@ public class IndexedBinaryHeap implements VertexHeap {
             if (k <= keys[c]) { // corte en empates
                 break;
             }
+            if (Instrumentation.ENABLED) stats.siftSteps++;
             heap[i] = heap[c];
             keys[i] = keys[c];
             pos[heap[i]] = i;

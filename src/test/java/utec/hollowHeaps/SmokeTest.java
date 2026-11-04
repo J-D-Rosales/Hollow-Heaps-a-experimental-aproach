@@ -9,6 +9,7 @@ import java.util.PriorityQueue;
 import java.util.Random;
 
 import utec.hollowHeaps.adapter.JavaPriorityQueueAdapter;
+import utec.hollowHeaps.api.Instrumentation;
 import utec.hollowHeaps.api.VertexHeap;
 import utec.hollowHeaps.binary.IndexedBinaryHeap;
 import utec.hollowHeaps.fibonacci.FibonacciHeap;
@@ -19,10 +20,27 @@ class SmokeTest {
     private static final int CAP = 10_000;
     private static final int OPS = 10_000;
 
-    @Test void hollowHeapSmoke()    { runSmoke(new HollowHeap(CAP)); }
-    @Test void fibonacciHeapSmoke() { runSmoke(new FibonacciHeap(CAP)); }
-    @Test void indexedBinarySmoke() { runSmoke(new IndexedBinaryHeap(CAP)); }
-    @Test void javaPQSmoke()        { runSmoke(new JavaPriorityQueueAdapter(CAP)); }
+    @Test void hollowHeapSmoke() {
+        HollowHeap h = new HollowHeap(CAP);
+        runSmoke(h);
+        assertFalse(Instrumentation.ENABLED, "SmokeTest debe correr sin -Dheap.instrument");
+        assertEquals(0, h.stats().inserts, "contadores deben ser 0 sin instrumentación");
+    }
+    @Test void fibonacciHeapSmoke() {
+        FibonacciHeap h = new FibonacciHeap(CAP);
+        runSmoke(h);
+        assertEquals(0, h.stats().inserts, "contadores deben ser 0 sin instrumentación");
+    }
+    @Test void indexedBinarySmoke() {
+        IndexedBinaryHeap h = new IndexedBinaryHeap(CAP);
+        runSmoke(h);
+        assertEquals(0, h.stats().inserts, "contadores deben ser 0 sin instrumentación");
+    }
+    @Test void javaPQSmoke() {
+        JavaPriorityQueueAdapter h = new JavaPriorityQueueAdapter(CAP);
+        runSmoke(h);
+        assertEquals(0, h.stats().inserts, "contadores deben ser 0 sin instrumentación");
+    }
 
     @Test
     void contrato() {

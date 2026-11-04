@@ -2,12 +2,12 @@ package utec.hollowHeaps.hollow;
 
 public class HollowNode {
 
-    public long key;
-    public int id;  // -1 => nodo HOLLOW
-    public int rank;
-    public HollowNode child;
-    public HollowNode next;
-    public HollowNode ep;
+    long key;
+    int id;  // -1 => nodo HOLLOW
+    int rank;
+    HollowNode child;
+    HollowNode next;
+    HollowNode ep;
 
     public HollowNode(long key, int id) {
         this.key = key;
