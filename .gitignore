@@ -39,3 +39,5 @@ build/
 .DS_Store
 
 .mcp.json
+### Resultados de benchmarks (se envían como .tar.gz, no se versionan) ###
+results/
