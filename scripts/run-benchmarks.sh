@@ -46,10 +46,26 @@ S123="S1Insert|S2DeleteMin|S3Mixed"
 log() { echo; echo "=== [$(date +%H:%M:%S)] $* ==="; }
 
 # --- comprobaciones -----------------------------------------------------------------------
-JV="$("$JAVA" -version 2>&1 | head -1)"
-echo "Java: $JV"
-if ! "$JAVA" -version 2>&1 | grep -qE 'version "21'; then
+echo "Modo: $MODE   Partes: $PARTS   Resultados: $OUT"
+if ! command -v "$JAVA" >/dev/null 2>&1; then
+  echo "ERROR: no se encontró Java ('$JAVA'). Instala Temurin 21 (ver BENCHMARKING.md, sección 1)"
+  echo "       o indica la ruta: JAVA=/ruta/al/jdk-21/bin/java $0 $MODE"
+  exit 1
+fi
+# Se guarda la salida en una variable antes de filtrarla: con pipefail, "java -version | head"
+# o "| grep -q" pueden matar a java con SIGPIPE y cerrar el script sin ningún mensaje.
+JVOUT="$("$JAVA" -version 2>&1 || true)"
+echo "Java: ${JVOUT%%$'\n'*}"
+if ! grep -qE 'version "21' <<<"$JVOUT"; then
   echo "ERROR: se necesita JDK 21 (Temurin 21). Usa JAVA=/ruta/al/jdk-21/bin/java"; exit 1
+fi
+if ! command -v mvn >/dev/null 2>&1; then
+  echo "ERROR: no se encontró Maven (mvn). Instálalo: sudo apt install -y maven"; exit 1
+fi
+MVNOUT="$(mvn -v 2>&1 || true)"
+if ! grep -qE 'Java version: 21' <<<"$MVNOUT"; then
+  echo "ERROR: Maven no está usando Java 21. Revisa 'mvn -v' y exporta JAVA_HOME al JDK 21:"
+  echo "       export JAVA_HOME=/usr/lib/jvm/temurin-21-jdk-amd64"; exit 1
 fi
 if [[ "$(uname -s)" != "Linux" ]]; then
   echo "AVISO: no es Linux; perfnorm no funcionará y los datos no valen para el paper."
