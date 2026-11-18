@@ -167,3 +167,29 @@ Correr un benchmark suelto a mano:
 mvn clean package
 java -jar target/benchmarks.jar S3Mixed -f 1 -wi 1 -i 2 -p impl=HH,IBH -p n=10000 -p k=4
 ```
+
+---
+
+## Datos de la campaña y cómo regenerar las tablas del paper
+
+Los datos de la campaña usada en el paper (10 de noviembre de 2026, Linux nativo, i7-13650HX,
+Temurin 21.0.10) están en `data/campaign-2026-11-10/`. En `environment.txt` y `run.log` se
+reemplazaron el nombre de la máquina y del usuario por `<host>` y `<user>`.
+
+| Archivo | Contenido |
+|---|---|
+| `main-s1s2s3.csv`, `main-s4.csv` | Tiempos de S1–S4 (JMH) |
+| `run.log` | Salida completa, con las iteraciones de cada fork (la usa el bootstrap) |
+| `nocoops-s3.csv` | S3 sin CompressedOops |
+| `gc-s3.csv` | S3 con `-prof gc` (incluye el setup) |
+| `alloc.csv` | AllocProbe: B/op de S3 sin el setup |
+| `jol-*.csv`, `jol-*-footprint.txt` | Bytes por elemento (JOL), con y sin CompressedOops |
+| `perfnorm-s2s3.csv` | Contadores de perf, n = 10⁶ (corrida aparte, misma máquina) |
+| `environment.txt` | Hardware, SO, JVM y flags |
+
+Para regenerar las tablas (requiere Python 3 con `pandas` y `numpy`):
+
+```bash
+python scripts/analysis/analyze.py data/campaign-2026-11-10
+python scripts/analysis/analyze_perf.py data/campaign-2026-11-10/perfnorm-s2s3.csv
+```

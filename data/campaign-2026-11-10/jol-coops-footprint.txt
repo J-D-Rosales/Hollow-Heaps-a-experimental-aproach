@@ -1,0 +1,588 @@
+=== S1 impl=HH n=10000 k=0 capacity=10000 compressedOops=true ===
+utec.hollowHeaps.hollow.HollowHeap@7e6cbb7ad footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         1        16        16   [Ljava.lang.Object;
+         2     20144     40288   [Lutec.hollowHeaps.hollow.HollowNode;
+         1        24        24   java.util.ArrayList
+         1       128       128   utec.hollowHeaps.api.HeapStats
+         1        48        48   utec.hollowHeaps.hollow.HollowHeap
+     10000        40    400000   utec.hollowHeaps.hollow.HollowNode
+     10006              440504   (total)
+
+
+=== S3 impl=HH n=10000 k=0 capacity=110001 compressedOops=true ===
+utec.hollowHeaps.hollow.HollowHeap@2d7a9786d footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         1        56        56   [Ljava.lang.Object;
+         2    220148    440296   [Lutec.hollowHeaps.hollow.HollowNode;
+         1        24        24   java.util.ArrayList
+         1       128       128   utec.hollowHeaps.api.HeapStats
+         1        48        48   utec.hollowHeaps.hollow.HollowHeap
+     10001        40    400040   utec.hollowHeaps.hollow.HollowNode
+     10007              840592   (total)
+
+
+=== S3 impl=HH n=10000 k=1 capacity=110001 compressedOops=true ===
+utec.hollowHeaps.hollow.HollowHeap@1c53bd49d footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         1        56        56   [Ljava.lang.Object;
+         2    220148    440296   [Lutec.hollowHeaps.hollow.HollowNode;
+         1        24        24   java.util.ArrayList
+         1       128       128   utec.hollowHeaps.api.HeapStats
+         1        48        48   utec.hollowHeaps.hollow.HollowHeap
+     16592        40    663680   utec.hollowHeaps.hollow.HollowNode
+     16598             1104232   (total)
+
+
+=== S3 impl=HH n=10000 k=4 capacity=110001 compressedOops=true ===
+utec.hollowHeaps.hollow.HollowHeap@434c179ed footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         1        56        56   [Ljava.lang.Object;
+         2    220148    440296   [Lutec.hollowHeaps.hollow.HollowNode;
+         1        24        24   java.util.ArrayList
+         1       128       128   utec.hollowHeaps.api.HeapStats
+         1        48        48   utec.hollowHeaps.hollow.HollowHeap
+     36670        40   1466800   utec.hollowHeaps.hollow.HollowNode
+     36676             1907352   (total)
+
+
+=== S3 impl=HH n=10000 k=16 capacity=110001 compressedOops=true ===
+utec.hollowHeaps.hollow.HollowHeap@3bb35082d footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         1        56        56   [Ljava.lang.Object;
+         2    220148    440296   [Lutec.hollowHeaps.hollow.HollowNode;
+         1        24        24   java.util.ArrayList
+         1       128       128   utec.hollowHeaps.api.HeapStats
+         1        48        48   utec.hollowHeaps.hollow.HollowHeap
+    115644        40   4625760   utec.hollowHeaps.hollow.HollowNode
+    115650             5066312   (total)
+
+
+=== S3 impl=HH n=10000 k=64 capacity=110001 compressedOops=true ===
+utec.hollowHeaps.hollow.HollowHeap@15bba829d footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         1        56        56   [Ljava.lang.Object;
+         2    220148    440296   [Lutec.hollowHeaps.hollow.HollowNode;
+         1        24        24   java.util.ArrayList
+         1       128       128   utec.hollowHeaps.api.HeapStats
+         1        48        48   utec.hollowHeaps.hollow.HollowHeap
+    438442        40  17537680   utec.hollowHeaps.hollow.HollowNode
+    438448            17978232   (total)
+
+
+=== S1 impl=FH n=10000 k=0 capacity=10000 compressedOops=true ===
+utec.hollowHeaps.fibonacci.FibonacciHeap@15b9cecbd footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         1        16        16   [Ljava.lang.Object;
+         2     20144     40288   [Lutec.hollowHeaps.fibonacci.FibonacciHeapNode;
+         1        24        24   java.util.ArrayList
+         1       128       128   utec.hollowHeaps.api.HeapStats
+         1        48        48   utec.hollowHeaps.fibonacci.FibonacciHeap
+     10000        48    480000   utec.hollowHeaps.fibonacci.FibonacciHeapNode
+     10006              520504   (total)
+
+
+=== S3 impl=FH n=10000 k=0 capacity=110001 compressedOops=true ===
+utec.hollowHeaps.fibonacci.FibonacciHeap@4543bf89d footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         1     56232     56232   [Ljava.lang.Object;
+         2    220148    440296   [Lutec.hollowHeaps.fibonacci.FibonacciHeapNode;
+         1        24        24   java.util.ArrayList
+         1       128       128   utec.hollowHeaps.api.HeapStats
+         1        48        48   utec.hollowHeaps.fibonacci.FibonacciHeap
+     10001        48    480048   utec.hollowHeaps.fibonacci.FibonacciHeapNode
+     10007              976776   (total)
+
+
+=== S3 impl=FH n=10000 k=1 capacity=110001 compressedOops=true ===
+utec.hollowHeaps.fibonacci.FibonacciHeap@304d2a08d footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         1     56232     56232   [Ljava.lang.Object;
+         2    220148    440296   [Lutec.hollowHeaps.fibonacci.FibonacciHeapNode;
+         1        24        24   java.util.ArrayList
+         1       128       128   utec.hollowHeaps.api.HeapStats
+         1        48        48   utec.hollowHeaps.fibonacci.FibonacciHeap
+     10001        48    480048   utec.hollowHeaps.fibonacci.FibonacciHeapNode
+     10007              976776   (total)
+
+
+=== S3 impl=FH n=10000 k=4 capacity=110001 compressedOops=true ===
+utec.hollowHeaps.fibonacci.FibonacciHeap@200c5e3dd footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         1     56232     56232   [Ljava.lang.Object;
+         2    220148    440296   [Lutec.hollowHeaps.fibonacci.FibonacciHeapNode;
+         1        24        24   java.util.ArrayList
+         1       128       128   utec.hollowHeaps.api.HeapStats
+         1        48        48   utec.hollowHeaps.fibonacci.FibonacciHeap
+     10001        48    480048   utec.hollowHeaps.fibonacci.FibonacciHeapNode
+     10007              976776   (total)
+
+
+=== S3 impl=FH n=10000 k=16 capacity=110001 compressedOops=true ===
+utec.hollowHeaps.fibonacci.FibonacciHeap@3bd90b9d footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         1     56232     56232   [Ljava.lang.Object;
+         2    220148    440296   [Lutec.hollowHeaps.fibonacci.FibonacciHeapNode;
+         1        24        24   java.util.ArrayList
+         1       128       128   utec.hollowHeaps.api.HeapStats
+         1        48        48   utec.hollowHeaps.fibonacci.FibonacciHeap
+     10001        48    480048   utec.hollowHeaps.fibonacci.FibonacciHeapNode
+     10007              976776   (total)
+
+
+=== S3 impl=FH n=10000 k=64 capacity=110001 compressedOops=true ===
+utec.hollowHeaps.fibonacci.FibonacciHeap@18a6296dd footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         1     56232     56232   [Ljava.lang.Object;
+         2    220148    440296   [Lutec.hollowHeaps.fibonacci.FibonacciHeapNode;
+         1        24        24   java.util.ArrayList
+         1       128       128   utec.hollowHeaps.api.HeapStats
+         1        48        48   utec.hollowHeaps.fibonacci.FibonacciHeap
+     10001        48    480048   utec.hollowHeaps.fibonacci.FibonacciHeapNode
+     10007              976776   (total)
+
+
+=== S1 impl=IBH n=10000 k=0 capacity=10000 compressedOops=true ===
+utec.hollowHeaps.binary.IndexedBinaryHeap@4dff7783d footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         2     40016     80032   [I
+         1     80016     80016   [J
+         1       128       128   utec.hollowHeaps.api.HeapStats
+         1        40        40   utec.hollowHeaps.binary.IndexedBinaryHeap
+         5              160216   (total)
+
+
+=== S3 impl=IBH n=10000 k=0 capacity=110001 compressedOops=true ===
+utec.hollowHeaps.binary.IndexedBinaryHeap@5fc84446d footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         2    440024    880048   [I
+         1    880024    880024   [J
+         1       128       128   utec.hollowHeaps.api.HeapStats
+         1        40        40   utec.hollowHeaps.binary.IndexedBinaryHeap
+         5             1760240   (total)
+
+
+=== S3 impl=IBH n=10000 k=1 capacity=110001 compressedOops=true ===
+utec.hollowHeaps.binary.IndexedBinaryHeap@6656e6e1d footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         2    440024    880048   [I
+         1    880024    880024   [J
+         1       128       128   utec.hollowHeaps.api.HeapStats
+         1        40        40   utec.hollowHeaps.binary.IndexedBinaryHeap
+         5             1760240   (total)
+
+
+=== S3 impl=IBH n=10000 k=4 capacity=110001 compressedOops=true ===
+utec.hollowHeaps.binary.IndexedBinaryHeap@2884ff20d footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         2    440024    880048   [I
+         1    880024    880024   [J
+         1       128       128   utec.hollowHeaps.api.HeapStats
+         1        40        40   utec.hollowHeaps.binary.IndexedBinaryHeap
+         5             1760240   (total)
+
+
+=== S3 impl=IBH n=10000 k=16 capacity=110001 compressedOops=true ===
+utec.hollowHeaps.binary.IndexedBinaryHeap@5971ce70d footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         2    440024    880048   [I
+         1    880024    880024   [J
+         1       128       128   utec.hollowHeaps.api.HeapStats
+         1        40        40   utec.hollowHeaps.binary.IndexedBinaryHeap
+         5             1760240   (total)
+
+
+=== S3 impl=IBH n=10000 k=64 capacity=110001 compressedOops=true ===
+utec.hollowHeaps.binary.IndexedBinaryHeap@68e6822d footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         2    440024    880048   [I
+         1    880024    880024   [J
+         1       128       128   utec.hollowHeaps.api.HeapStats
+         1        40        40   utec.hollowHeaps.binary.IndexedBinaryHeap
+         5             1760240   (total)
+
+
+=== S1 impl=PQL n=10000 k=0 capacity=10000 compressedOops=true ===
+utec.hollowHeaps.adapter.JavaPriorityQueueAdapter@16951e83d footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         1     10016     10016   [B
+         1     80016     80016   [J
+         1     52672     52672   [Ljava.lang.Object;
+         1        16        16   java.util.Comparator$$Lambda/0x00007af5a40b33d0
+         1        32        32   java.util.PriorityQueue
+         1        40        40   utec.hollowHeaps.adapter.JavaPriorityQueueAdapter
+         1        16        16   utec.hollowHeaps.adapter.JavaPriorityQueueAdapter$$Lambda/0x00007af5a40c7ac8
+     10000        24    240000   utec.hollowHeaps.adapter.JavaPriorityQueueAdapter$Entry
+         1       128       128   utec.hollowHeaps.api.HeapStats
+     10008              382936   (total)
+
+
+=== S3 impl=PQL n=10000 k=0 capacity=110001 compressedOops=true ===
+utec.hollowHeaps.adapter.JavaPriorityQueueAdapter@c975c2ad footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         1    110024    110024   [B
+         1    880024    880024   [J
+         1     52672     52672   [Ljava.lang.Object;
+         1        16        16   java.util.Comparator$$Lambda/0x00007af5a40b33d0
+         1        32        32   java.util.PriorityQueue
+         1        40        40   utec.hollowHeaps.adapter.JavaPriorityQueueAdapter
+         1        16        16   utec.hollowHeaps.adapter.JavaPriorityQueueAdapter$$Lambda/0x00007af5a40c7ac8
+     10000        24    240000   utec.hollowHeaps.adapter.JavaPriorityQueueAdapter$Entry
+         1       128       128   utec.hollowHeaps.api.HeapStats
+     10008             1282952   (total)
+
+
+=== S3 impl=PQL n=10000 k=1 capacity=110001 compressedOops=true ===
+utec.hollowHeaps.adapter.JavaPriorityQueueAdapter@9bd4c12d footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         1    110024    110024   [B
+         1    880024    880024   [J
+         1     79000     79000   [Ljava.lang.Object;
+         1        16        16   java.util.Comparator$$Lambda/0x00007af5a40b33d0
+         1        32        32   java.util.PriorityQueue
+         1        40        40   utec.hollowHeaps.adapter.JavaPriorityQueueAdapter
+         1        16        16   utec.hollowHeaps.adapter.JavaPriorityQueueAdapter$$Lambda/0x00007af5a40c7ac8
+     16591        24    398184   utec.hollowHeaps.adapter.JavaPriorityQueueAdapter$Entry
+         1       128       128   utec.hollowHeaps.api.HeapStats
+     16599             1467464   (total)
+
+
+=== S3 impl=PQL n=10000 k=4 capacity=110001 compressedOops=true ===
+utec.hollowHeaps.adapter.JavaPriorityQueueAdapter@5214fcffd footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         1    110024    110024   [B
+         1    880024    880024   [J
+         1    177728    177728   [Ljava.lang.Object;
+         1        16        16   java.util.Comparator$$Lambda/0x00007af5a40b33d0
+         1        32        32   java.util.PriorityQueue
+         1        40        40   utec.hollowHeaps.adapter.JavaPriorityQueueAdapter
+         1        16        16   utec.hollowHeaps.adapter.JavaPriorityQueueAdapter$$Lambda/0x00007af5a40c7ac8
+     36675        24    880200   utec.hollowHeaps.adapter.JavaPriorityQueueAdapter$Entry
+         1       128       128   utec.hollowHeaps.api.HeapStats
+     36683             2048208   (total)
+
+
+=== S3 impl=PQL n=10000 k=16 capacity=110001 compressedOops=true ===
+utec.hollowHeaps.adapter.JavaPriorityQueueAdapter@aa87899d footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         1    110024    110024   [B
+         1    880024    880024   [J
+         1    599792    599792   [Ljava.lang.Object;
+         1        16        16   java.util.Comparator$$Lambda/0x00007af5a40b33d0
+         1        32        32   java.util.PriorityQueue
+         1        40        40   utec.hollowHeaps.adapter.JavaPriorityQueueAdapter
+         1        16        16   utec.hollowHeaps.adapter.JavaPriorityQueueAdapter$$Lambda/0x00007af5a40c7ac8
+    115658        24   2775792   utec.hollowHeaps.adapter.JavaPriorityQueueAdapter$Entry
+         1       128       128   utec.hollowHeaps.api.HeapStats
+    115666             4365864   (total)
+
+
+=== S3 impl=PQL n=10000 k=64 capacity=110001 compressedOops=true ===
+utec.hollowHeaps.adapter.JavaPriorityQueueAdapter@14ff46d1d footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         1    110024    110024   [B
+         1    880024    880024   [J
+         1   2024264   2024264   [Ljava.lang.Object;
+         1        16        16   java.util.Comparator$$Lambda/0x00007af5a40b33d0
+         1        32        32   java.util.PriorityQueue
+         1        40        40   utec.hollowHeaps.adapter.JavaPriorityQueueAdapter
+         1        16        16   utec.hollowHeaps.adapter.JavaPriorityQueueAdapter$$Lambda/0x00007af5a40c7ac8
+    438525        24  10524600   utec.hollowHeaps.adapter.JavaPriorityQueueAdapter$Entry
+         1       128       128   utec.hollowHeaps.api.HeapStats
+    438533            13539144   (total)
+
+
+=== S1 impl=HH n=1000000 k=0 capacity=1000000 compressedOops=true ===
+utec.hollowHeaps.hollow.HollowHeap@2c563443d footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         1        16        16   [Ljava.lang.Object;
+         2   2000144   4000288   [Lutec.hollowHeaps.hollow.HollowNode;
+         1        24        24   java.util.ArrayList
+         1       128       128   utec.hollowHeaps.api.HeapStats
+         1        48        48   utec.hollowHeaps.hollow.HollowHeap
+   1000000        40  40000000   utec.hollowHeaps.hollow.HollowNode
+   1000006            44000504   (total)
+
+
+=== S3 impl=HH n=1000000 k=0 capacity=1100001 compressedOops=true ===
+utec.hollowHeaps.hollow.HollowHeap@377fe632d footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         1        56        56   [Ljava.lang.Object;
+         2   2200148   4400296   [Lutec.hollowHeaps.hollow.HollowNode;
+         1        24        24   java.util.ArrayList
+         1       128       128   utec.hollowHeaps.api.HeapStats
+         1        48        48   utec.hollowHeaps.hollow.HollowHeap
+   1000001        40  40000040   utec.hollowHeaps.hollow.HollowNode
+   1000007            44400592   (total)
+
+
+=== S3 impl=HH n=1000000 k=1 capacity=1100001 compressedOops=true ===
+utec.hollowHeaps.hollow.HollowHeap@79ca5f1d footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         1        56        56   [Ljava.lang.Object;
+         2   2200148   4400296   [Lutec.hollowHeaps.hollow.HollowNode;
+         1        24        24   java.util.ArrayList
+         1       128       128   utec.hollowHeaps.api.HeapStats
+         1        48        48   utec.hollowHeaps.hollow.HollowHeap
+   1095071        40  43802840   utec.hollowHeaps.hollow.HollowNode
+   1095077            48203392   (total)
+
+
+=== S3 impl=HH n=1000000 k=4 capacity=1100001 compressedOops=true ===
+utec.hollowHeaps.hollow.HollowHeap@29e29121d footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         1        56        56   [Ljava.lang.Object;
+         2   2200148   4400296   [Lutec.hollowHeaps.hollow.HollowNode;
+         1        24        24   java.util.ArrayList
+         1       128       128   utec.hollowHeaps.api.HeapStats
+         1        48        48   utec.hollowHeaps.hollow.HollowHeap
+   1380403        40  55216120   utec.hollowHeaps.hollow.HollowNode
+   1380409            59616672   (total)
+
+
+=== S3 impl=HH n=1000000 k=16 capacity=1100001 compressedOops=true ===
+utec.hollowHeaps.hollow.HollowHeap@33ba2af6d footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         1        56        56   [Ljava.lang.Object;
+         2   2200148   4400296   [Lutec.hollowHeaps.hollow.HollowNode;
+         1        24        24   java.util.ArrayList
+         1       128       128   utec.hollowHeaps.api.HeapStats
+         1        48        48   utec.hollowHeaps.hollow.HollowHeap
+   2522270        40 100890800   utec.hollowHeaps.hollow.HollowNode
+   2522276           105291352   (total)
+
+
+=== S3 impl=HH n=1000000 k=64 capacity=1100001 compressedOops=true ===
+utec.hollowHeaps.hollow.HollowHeap@56a2ea0dd footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         1        56        56   [Ljava.lang.Object;
+         2   2200148   4400296   [Lutec.hollowHeaps.hollow.HollowNode;
+         1        24        24   java.util.ArrayList
+         1       128       128   utec.hollowHeaps.api.HeapStats
+         1        48        48   utec.hollowHeaps.hollow.HollowHeap
+   7089450        40 283578000   utec.hollowHeaps.hollow.HollowNode
+   7089456           287978552   (total)
+
+
+=== S1 impl=FH n=1000000 k=0 capacity=1000000 compressedOops=true ===
+utec.hollowHeaps.fibonacci.FibonacciHeap@2fc123bad footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         1        16        16   [Ljava.lang.Object;
+         2   2000144   4000288   [Lutec.hollowHeaps.fibonacci.FibonacciHeapNode;
+         1        24        24   java.util.ArrayList
+         1       128       128   utec.hollowHeaps.api.HeapStats
+         1        48        48   utec.hollowHeaps.fibonacci.FibonacciHeap
+   1000000        48  48000000   utec.hollowHeaps.fibonacci.FibonacciHeapNode
+   1000006            52000504   (total)
+
+
+=== S3 impl=FH n=1000000 k=0 capacity=1100001 compressedOops=true ===
+utec.hollowHeaps.fibonacci.FibonacciHeap@507f5086d footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         1   4861968   4861968   [Ljava.lang.Object;
+         2   2200148   4400296   [Lutec.hollowHeaps.fibonacci.FibonacciHeapNode;
+         1        24        24   java.util.ArrayList
+         1       128       128   utec.hollowHeaps.api.HeapStats
+         1        48        48   utec.hollowHeaps.fibonacci.FibonacciHeap
+   1000001        48  48000048   utec.hollowHeaps.fibonacci.FibonacciHeapNode
+   1000007            57262512   (total)
+
+
+=== S3 impl=FH n=1000000 k=1 capacity=1100001 compressedOops=true ===
+utec.hollowHeaps.fibonacci.FibonacciHeap@243f5891d footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         1   4861968   4861968   [Ljava.lang.Object;
+         2   2200148   4400296   [Lutec.hollowHeaps.fibonacci.FibonacciHeapNode;
+         1        24        24   java.util.ArrayList
+         1       128       128   utec.hollowHeaps.api.HeapStats
+         1        48        48   utec.hollowHeaps.fibonacci.FibonacciHeap
+   1000001        48  48000048   utec.hollowHeaps.fibonacci.FibonacciHeapNode
+   1000007            57262512   (total)
+
+
+=== S3 impl=FH n=1000000 k=4 capacity=1100001 compressedOops=true ===
+utec.hollowHeaps.fibonacci.FibonacciHeap@799ab2fbd footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         1   4861968   4861968   [Ljava.lang.Object;
+         2   2200148   4400296   [Lutec.hollowHeaps.fibonacci.FibonacciHeapNode;
+         1        24        24   java.util.ArrayList
+         1       128       128   utec.hollowHeaps.api.HeapStats
+         1        48        48   utec.hollowHeaps.fibonacci.FibonacciHeap
+   1000001        48  48000048   utec.hollowHeaps.fibonacci.FibonacciHeapNode
+   1000007            57262512   (total)
+
+
+=== S3 impl=FH n=1000000 k=16 capacity=1100001 compressedOops=true ===
+utec.hollowHeaps.fibonacci.FibonacciHeap@e4fdc2d footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         1   4861968   4861968   [Ljava.lang.Object;
+         2   2200148   4400296   [Lutec.hollowHeaps.fibonacci.FibonacciHeapNode;
+         1        24        24   java.util.ArrayList
+         1       128       128   utec.hollowHeaps.api.HeapStats
+         1        48        48   utec.hollowHeaps.fibonacci.FibonacciHeap
+   1000001        48  48000048   utec.hollowHeaps.fibonacci.FibonacciHeapNode
+   1000007            57262512   (total)
+
+
+=== S3 impl=FH n=1000000 k=64 capacity=1100001 compressedOops=true ===
+utec.hollowHeaps.fibonacci.FibonacciHeap@4fcd3704d footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         1   4861968   4861968   [Ljava.lang.Object;
+         2   2200148   4400296   [Lutec.hollowHeaps.fibonacci.FibonacciHeapNode;
+         1        24        24   java.util.ArrayList
+         1       128       128   utec.hollowHeaps.api.HeapStats
+         1        48        48   utec.hollowHeaps.fibonacci.FibonacciHeap
+   1000001        48  48000048   utec.hollowHeaps.fibonacci.FibonacciHeapNode
+   1000007            57262512   (total)
+
+
+=== S1 impl=IBH n=1000000 k=0 capacity=1000000 compressedOops=true ===
+utec.hollowHeaps.binary.IndexedBinaryHeap@392aefced footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         2   4000016   8000032   [I
+         1   8000016   8000016   [J
+         1       128       128   utec.hollowHeaps.api.HeapStats
+         1        40        40   utec.hollowHeaps.binary.IndexedBinaryHeap
+         5            16000216   (total)
+
+
+=== S3 impl=IBH n=1000000 k=0 capacity=1100001 compressedOops=true ===
+utec.hollowHeaps.binary.IndexedBinaryHeap@bd7b77bd footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         2   4400024   8800048   [I
+         1   8800024   8800024   [J
+         1       128       128   utec.hollowHeaps.api.HeapStats
+         1        40        40   utec.hollowHeaps.binary.IndexedBinaryHeap
+         5            17600240   (total)
+
+
+=== S3 impl=IBH n=1000000 k=1 capacity=1100001 compressedOops=true ===
+utec.hollowHeaps.binary.IndexedBinaryHeap@3b00b8ddd footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         2   4400024   8800048   [I
+         1   8800024   8800024   [J
+         1       128       128   utec.hollowHeaps.api.HeapStats
+         1        40        40   utec.hollowHeaps.binary.IndexedBinaryHeap
+         5            17600240   (total)
+
+
+=== S3 impl=IBH n=1000000 k=4 capacity=1100001 compressedOops=true ===
+utec.hollowHeaps.binary.IndexedBinaryHeap@6856d533d footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         2   4400024   8800048   [I
+         1   8800024   8800024   [J
+         1       128       128   utec.hollowHeaps.api.HeapStats
+         1        40        40   utec.hollowHeaps.binary.IndexedBinaryHeap
+         5            17600240   (total)
+
+
+=== S3 impl=IBH n=1000000 k=16 capacity=1100001 compressedOops=true ===
+utec.hollowHeaps.binary.IndexedBinaryHeap@4cf7037cd footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         2   4400024   8800048   [I
+         1   8800024   8800024   [J
+         1       128       128   utec.hollowHeaps.api.HeapStats
+         1        40        40   utec.hollowHeaps.binary.IndexedBinaryHeap
+         5            17600240   (total)
+
+
+=== S3 impl=IBH n=1000000 k=64 capacity=1100001 compressedOops=true ===
+utec.hollowHeaps.binary.IndexedBinaryHeap@234ac444d footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         2   4400024   8800048   [I
+         1   8800024   8800024   [J
+         1       128       128   utec.hollowHeaps.api.HeapStats
+         1        40        40   utec.hollowHeaps.binary.IndexedBinaryHeap
+         5            17600240   (total)
+
+
+=== S1 impl=PQL n=1000000 k=0 capacity=1000000 compressedOops=true ===
+utec.hollowHeaps.adapter.JavaPriorityQueueAdapter@392356f3d footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         1   1000016   1000016   [B
+         1   8000016   8000016   [J
+         1   4554560   4554560   [Ljava.lang.Object;
+         1        16        16   java.util.Comparator$$Lambda/0x00007af5a40b33d0
+         1        32        32   java.util.PriorityQueue
+         1        40        40   utec.hollowHeaps.adapter.JavaPriorityQueueAdapter
+         1        16        16   utec.hollowHeaps.adapter.JavaPriorityQueueAdapter$$Lambda/0x00007af5a40c7ac8
+   1000000        24  24000000   utec.hollowHeaps.adapter.JavaPriorityQueueAdapter$Entry
+         1       128       128   utec.hollowHeaps.api.HeapStats
+   1000008            37554824   (total)
+
+
+=== S3 impl=PQL n=1000000 k=0 capacity=1100001 compressedOops=true ===
+utec.hollowHeaps.adapter.JavaPriorityQueueAdapter@f769abfd footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         1   1100024   1100024   [B
+         1   8800024   8800024   [J
+         1   4554560   4554560   [Ljava.lang.Object;
+         1        16        16   java.util.Comparator$$Lambda/0x00007af5a40b33d0
+         1        32        32   java.util.PriorityQueue
+         1        40        40   utec.hollowHeaps.adapter.JavaPriorityQueueAdapter
+         1        16        16   utec.hollowHeaps.adapter.JavaPriorityQueueAdapter$$Lambda/0x00007af5a40c7ac8
+   1000000        24  24000000   utec.hollowHeaps.adapter.JavaPriorityQueueAdapter$Entry
+         1       128       128   utec.hollowHeaps.api.HeapStats
+   1000008            38454840   (total)
+
+
+=== S3 impl=PQL n=1000000 k=1 capacity=1100001 compressedOops=true ===
+utec.hollowHeaps.adapter.JavaPriorityQueueAdapter@7f4057cbd footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         1   1100024   1100024   [B
+         1   8800024   8800024   [J
+         1   4554560   4554560   [Ljava.lang.Object;
+         1        16        16   java.util.Comparator$$Lambda/0x00007af5a40b33d0
+         1        32        32   java.util.PriorityQueue
+         1        40        40   utec.hollowHeaps.adapter.JavaPriorityQueueAdapter
+         1        16        16   utec.hollowHeaps.adapter.JavaPriorityQueueAdapter$$Lambda/0x00007af5a40c7ac8
+   1095070        24  26281680   utec.hollowHeaps.adapter.JavaPriorityQueueAdapter$Entry
+         1       128       128   utec.hollowHeaps.api.HeapStats
+   1095078            40736520   (total)
+
+
+=== S3 impl=PQL n=1000000 k=4 capacity=1100001 compressedOops=true ===
+utec.hollowHeaps.adapter.JavaPriorityQueueAdapter@733678e4d footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         1   1100024   1100024   [B
+         1   8800024   8800024   [J
+         1   6831832   6831832   [Ljava.lang.Object;
+         1        16        16   java.util.Comparator$$Lambda/0x00007af5a40b33d0
+         1        32        32   java.util.PriorityQueue
+         1        40        40   utec.hollowHeaps.adapter.JavaPriorityQueueAdapter
+         1        16        16   utec.hollowHeaps.adapter.JavaPriorityQueueAdapter$$Lambda/0x00007af5a40c7ac8
+   1380402        24  33129648   utec.hollowHeaps.adapter.JavaPriorityQueueAdapter$Entry
+         1       128       128   utec.hollowHeaps.api.HeapStats
+   1380410            49861760   (total)
+
+
+=== S3 impl=PQL n=1000000 k=16 capacity=1100001 compressedOops=true ===
+utec.hollowHeaps.adapter.JavaPriorityQueueAdapter@7d065fd0d footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         1   1100024   1100024   [B
+         1   8800024   8800024   [J
+         1  10247744  10247744   [Ljava.lang.Object;
+         1        16        16   java.util.Comparator$$Lambda/0x00007af5a40b33d0
+         1        32        32   java.util.PriorityQueue
+         1        40        40   utec.hollowHeaps.adapter.JavaPriorityQueueAdapter
+         1        16        16   utec.hollowHeaps.adapter.JavaPriorityQueueAdapter$$Lambda/0x00007af5a40c7ac8
+   2522277        24  60534648   utec.hollowHeaps.adapter.JavaPriorityQueueAdapter$Entry
+         1       128       128   utec.hollowHeaps.api.HeapStats
+   2522285            80682672   (total)
+
+
+=== S3 impl=PQL n=1000000 k=64 capacity=1100001 compressedOops=true ===
+utec.hollowHeaps.adapter.JavaPriorityQueueAdapter@7aa2ec7bd footprint:
+     COUNT       AVG       SUM   DESCRIPTION
+         1   1100024   1100024   [B
+         1   8800024   8800024   [J
+         1  34586080  34586080   [Ljava.lang.Object;
+         1        16        16   java.util.Comparator$$Lambda/0x00007af5a40b33d0
+         1        32        32   java.util.PriorityQueue
+         1        40        40   utec.hollowHeaps.adapter.JavaPriorityQueueAdapter
+         1        16        16   utec.hollowHeaps.adapter.JavaPriorityQueueAdapter$$Lambda/0x00007af5a40c7ac8
+   7089462        24 170147088   utec.hollowHeaps.adapter.JavaPriorityQueueAdapter$Entry
+         1       128       128   utec.hollowHeaps.api.HeapStats
+   7089470           214633448   (total)
+
+
